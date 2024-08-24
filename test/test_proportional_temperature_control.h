@@ -10,8 +10,8 @@ namespace proportional_temperature_controller {
 
     void test_initial_state() {
         ProportionlTemperatureController controller(1.0);
-        Temperature input(25.0);
-        Temperature setpoint(25.0);
+        Temperature input(25.0, 0x00);
+        Temperature setpoint(25.0, 0x00);
         Signal output = controller.control(input, setpoint);
         TEST_ASSERT_EQUAL(0.0, output.getValue());
     }

@@ -7,7 +7,8 @@
 class Volt : public Read<float>
 {
 public:
-    Volt(float value) : Read(value, VOLT) {}
+    Volt(float value, uint8_t source) : Read(value, VOLT, source) {}
+    Volt(Read<float> read) : Read(read.getValue(), VOLT, read.getSource()){}
 };
 
-#endif // READ_H
+#endif
