@@ -16,12 +16,14 @@ class Read
 private:
     T value;
     uint8_t units;
+    uint8_t source;
 protected:
 
 public:
-    Read(T value, uint8_t units) {
+    Read(T value, uint8_t units, uint8_t source) {
         this->value = value;
         this->units = units;
+        this->source = source;
     }
 
     T getValue() {
@@ -32,18 +34,22 @@ public:
         return units;
     }
 
+    uint8_t getSource() {
+        return source;
+    }
+
     Read operator-(const Read& other) const {
         if (this->units != other.units) {
             throw std::invalid_argument("Units must be the same for subtraction");
         }
-        return Read(this->value - other.value, this->units);
+        return Read(this->value - other.value, this->units, this->source);
     }
 
     Read operator+(const Read& other) const {
         if (this->units != other.units) {
             throw std::invalid_argument("Units must be the same for addition");
         }
-        return Read(this->value + other.value, this->units);
+        return Read(this->value + other.value, this->units, this->source);
     }
 
 };

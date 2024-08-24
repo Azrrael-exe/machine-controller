@@ -11,13 +11,15 @@ private:
     float referenceVoltage;
 
 public:
-    TemperatureSensor(int analogPin, float refVoltage = 5.0)
-        : pin(analogPin), referenceVoltage(refVoltage) {}
+    TemperatureSensor(uint8_t id, int analogPin, float refVoltage = 5.0): Sensor<Temperature, float, 3>(id) {
+        pin = analogPin;
+        referenceVoltage = refVoltage;
+    }
 
     float read() override {
         int rawValue = 512; // analogRead(pin);
         float voltage = (rawValue / 1023.0) * referenceVoltage;
-        float temperatureCelsius = voltage * 100.0;
+        float temperatureCelsius = voltage;
         
         return temperatureCelsius;
     }
@@ -31,7 +33,7 @@ public:
     }
 
     Temperature getRead() override {
-        return Temperature(buffer.mean());
+        return Temperature(buffer.mean(), this->id);
     }
 };
 

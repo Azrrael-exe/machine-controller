@@ -7,7 +7,7 @@
 class Signal : public Read<float>
 {
 public:
-    Signal(float value) : Read(value, PERCENT) {}
+    Signal(float value, uint8_t source) : Read(value, PERCENT, source) {}
 };
 
 #endif // READ_H

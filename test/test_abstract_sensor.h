@@ -9,25 +9,27 @@
 
 class TestRead : public Read<float> {
     public:
-        TestRead(float value) : Read<float>(value, ADIMENTIONAL) {}
+        TestRead(float value, uint8_t source) : Read<float>(value, ADIMENTIONAL, source) {}
 };
 
 class TestSensor : public Sensor<TestRead, float, 5> {
     public:
+        TestSensor(uint8_t id) : Sensor<TestRead, float, 5>(id) {}
         float read() override {
             return 0.7;
         }
 
         TestRead getRead() override {
-            return TestRead(this->buffer[0]);
+            return TestRead(this->buffer[0], this->id);
         }
 };
 
 void test_initial_state() {
-    TestSensor sensor;
+    TestSensor sensor(0xAA);
     sensor.takeSample();
-    TEST_ASSERT_EQUAL(TestRead(0.7).getValue(), sensor.getRead().getValue());
+    TEST_ASSERT_EQUAL(TestRead(0.7, 0xAA).getValue(), sensor.getRead().getValue());
     TEST_ASSERT_EQUAL(ADIMENTIONAL, sensor.getRead().getUnits());
+    TEST_ASSERT_EQUAL(0xAA, sensor.getId());
 }
 
 

@@ -10,7 +10,12 @@ class Sensor {
 protected:
     CircularBuffer<T, BufferSize> buffer;
     T lastRead = T();
+    uint8_t id;
 public:
+    Sensor(uint8_t id) {
+        this->id = id;
+    }
+
     virtual T read() = 0;
 
     virtual R getRead() = 0;
@@ -18,6 +23,10 @@ public:
     void takeSample() {
         T value = read();
         buffer.push(value);
+    }
+
+    uint8_t getId() {
+        return this->id;
     }
 };
 

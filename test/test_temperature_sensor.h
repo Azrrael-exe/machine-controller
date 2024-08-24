@@ -8,18 +8,18 @@
 
 namespace temperature_sensor {
     void test_initial_state() {
-        TemperatureSensor sensor(A0);
+        TemperatureSensor sensor(0x0A, A0);
         sensor.takeSample();
-        TEST_ASSERT_EQUAL(Temperature(250.0).getValue(), sensor.getRead().getValue());
+        TEST_ASSERT_EQUAL(Temperature(250.0, 0xAA).getValue(), sensor.getRead().getValue());
         TEST_ASSERT_EQUAL(CELSIUS, sensor.getRead().getUnits());
     }
 
     void test_read_value() {
-        TemperatureSensor sensor(A0);
+        TemperatureSensor sensor(0x0A, A0);
         for(int i = 0; i < 5; i++) {
             sensor.takeSample();
         }
-        TEST_ASSERT_EQUAL(Temperature(250.0).getValue(), sensor.getRead().getValue());
+        TEST_ASSERT_EQUAL(Temperature(250.0, 0xAA).getValue(), sensor.getRead().getValue());
     }
 
     void run_tests() {

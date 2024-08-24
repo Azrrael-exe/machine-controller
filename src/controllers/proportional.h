@@ -19,7 +19,7 @@ class ProportionlTemperatureController : public Controller<Temperature>
     {
         Temperature error = setpoint - input;
         float output = this->kp * error.getValue();
-        return Signal(output);
+        return Signal(output, 0x00);
     }
 };
 
