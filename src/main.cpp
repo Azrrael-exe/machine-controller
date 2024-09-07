@@ -2,24 +2,30 @@
 #include "settings.h"
 #include "sensors/temperatureSensor.h"
 #include "controllers/proportional.h"
+#include "processJson.h"
 
 TemperatureSensor tempSensor(Settings::TEMP_SENSOR_ID, A0);
-ProportionlTemperatureController controller(1);
+ProportionlTemperatureController controller(0x00, 0.5);
 
 void setup() {
     Serial.begin(115200);
 }
 
 void loop() {
-    // read_settings 
+    
     tempSensor.takeSample();
     Temperature input = tempSensor.getRead();
-    Signal response = controller.control(input, Temperature(25.0, 0x00));
+    Temperature setPoint = Temperature(25.0, 0x00);
+    Signal response = controller.control(input, setPoint);
 
-    Serial.print("Input: ");
-    Serial.println(input.getValue());
-    Serial.print("Output: ");
-    Serial.println(response.getValue());
+    StaticJsonDocument<200> jsonDoc;
+    jsonDoc["error"] = readToJson(response);
+    jsonDoc["input"] = readToJson(input);
+    jsonDoc["setpoint"] = readToJson(setPoint);
+    
+    String jsonString;
+    serializeJson(jsonDoc, jsonString);
+    Serial.println(jsonString);
 
     delay(1000);
 }

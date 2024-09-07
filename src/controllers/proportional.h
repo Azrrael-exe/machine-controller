@@ -11,7 +11,7 @@ class ProportionlTemperatureController : public Controller<Temperature>
     private:
         float kp;
     public:
-    ProportionlTemperatureController(float kp) : Controller() {
+    ProportionlTemperatureController(int8_t id_cont, float kp) : Controller<Temperature>(id_cont) {
         this->kp = kp;
 
     }
@@ -19,7 +19,7 @@ class ProportionlTemperatureController : public Controller<Temperature>
     {
         Temperature error = setpoint - input;
         float output = this->kp * error.getValue();
-        return Signal(output, 0x00);
+        return Signal(output, this->id_cont);
     }
 };
 
