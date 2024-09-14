@@ -8,14 +8,15 @@
 
 class PIDTemperatureController : public Controller<Temperature>
 {
-    private:
-        float kp;   
-        float ki;   
-        float kd;   
-        float previousError; // Error anterior para la parte derivativa
-        float integral;      // Acumulador de la integral
-        unsigned long previousTime; // Tiempo anterior para la derivativa
-    public:
+private:
+    float kp;   
+    float ki;   
+    float kd;   
+    float previousError; // Error anterior para la parte derivativa
+    float integral;      // Acumulador de la integral
+    unsigned long previousTime; // Tiempo anterior para la derivativa
+
+public:
     PIDTemperatureController(int8_t id_cont, float kp, float ki, float kd) : Controller<Temperature>(id_cont) {
         this->kp = kp;
         this->ki = ki;
@@ -51,6 +52,14 @@ class PIDTemperatureController : public Controller<Temperature>
         float output = P + I + D;
         return Signal(output, this->id_cont);
     }
+
+    // Métodos getter para pruebas
+    float getKp() const { return kp; }
+    float getKi() const { return ki; }
+    float getKd() const { return kd; }
+    float getPreviousError() const { return previousError; }
+    float getIntegral() const { return integral; }
+    unsigned long getPreviousTime() const { return previousTime; }
 };
 
 #endif // PID_TEMPERATURE_CONTROLLER_H

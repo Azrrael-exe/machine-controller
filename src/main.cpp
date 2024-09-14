@@ -7,8 +7,8 @@
 #include "serializers/serializers.h"
 
 TemperatureSensor tempSensor(Settings::TEMP_SENSOR_ID, A0);
-ProportionlTemperatureController controller(0x00, 0.5);
-PIDTemperatureController controller(0x00, 0.5, 0.1, 0.05);
+//ProportionlTemperatureController controller(0x00, 0.5);
+PIDTemperatureController Controller(0x00, 0.5, 0.1, 0.05);
 
 void setup() {
     Serial.begin(115200);
