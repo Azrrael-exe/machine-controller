@@ -6,6 +6,7 @@
 #include "test_proportional_temperature_control.h"
 #include "test_reads.h"
 #include "test_send_Json.h"
+#include "test_serializers.h"
 
 void setup() {
     delay(2000);
@@ -17,6 +18,8 @@ void setup() {
     proportional_temperature_controller::run_tests();
     run_circular_buffer_tests();
     run_Json_test();
+    run_serializer_tests();
+
     UNITY_END();
 }
 
